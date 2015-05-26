@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>lab</title>
+        <meta charset="GBK">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="js/zepto.js"></script>
+        <script type="text/javascript" src="js/touch.js"></script>
+          <script type="text/javascript" src="js/fx.js"></script>
+        <style>
+        html,body{height: 100%;width: 100%;}
+        *{margin:0;padding: 0;}
+          .menu {height: 100%;width: 100%;background-color: #ccc;overflow: hidden;}
+          .menu ul {height: 100%;margin-top: 40px;}
+          .menu ul li{ position:relative;list-style: none;height:50px;line-height:50px;width: 100%;box-shadow:4px 2px 6px #333333; }
+          .menu ul li:nth-child(1),.bg1{background-color: #eb8327;}
+          .menu ul li:nth-child(2),.bg2{background-color: #f2ef13;}
+          .menu ul li:nth-child(3),.bg3{background-color: #f24213;}
+
+          .cnt{ z-index: 9999999; position: absolute;left:85%;top:0;height: 100%;width: 15%;}
+          .cnt1{ box-shadow: 0 0 7px rgba(250,0,0,0.5); height: 100%; width:100%;}
+        </style>
+    </head>
+    <body>
+    	<div class="menu">
+    	      <ul class="j-tab">
+    		<li>color0</li>
+    		<li>color1</li>
+    		<li>color2</li>
+    	      </ul>
+    	</div>
+
+    	<div class="cnt" >
+              <div class="cnt1 bg1"></div>
+              <div class="cnt1 bg2" style="display:none;"></div>
+              <div class="cnt1 bg3" style="display:none;"></div>
+
+    	</div>
+
+
+      <script type="text/javascript">
+      Zepto(function($){
+         //alert('Ready to Zepto!')
+             document.addEventListener('touchmove', function (event) {
+            event.preventDefault();
+             }, false);
+    //li tab切换
+	var _index = 0
+     $('.j-tab li').tap(function(){
+       _index = _index+1;
+         var n=$(this).index();
+         $('.cnt div').each(function(){
+            var i=$(this).index();
+              if(i==n){
+                $(this).css({display:'block'});
+
+              }
+              else{$(this).css({display:'none'});}
+
+         });
+            $(this).css({'z-index':_index});
+            $(this).animate({scaleY: '1.5'}, 150, 'ease-in-out',function(){
+                  $(this).animate({scaleY: '1'}, 150, 'ease-in-out',function(){
+					$('.cnt').animate({width: '100%',left:'0px'}, 500, 'ease-in-out');
+				});
+            });
+              
+            //$('.cnt1').delay(300).animate({width: '100%',left:'0px'}, 200, 'ease-in-out');
+            // $(this).css({'z-index':'0'});
+
+
+
+
+
+
+     })
+         
+     
+
+       //左右滑动
+        $('.cnt').swipeLeft(function(){
+           $(this).animate({
+                              width: '100%',
+                              left:'0px'
+                             }, 200,
+                                'ease-in-out');
+                 
+                     })
+
+
+         $('.cnt').swipeRight(function(){
+            $(this).animate({
+                              width: '15%',
+                              left:'85%'
+                             }, 200,
+                                'ease-in-out');
+                 
+           })
+
+        })
+      </script>
+
+    </body>
+    </html>
